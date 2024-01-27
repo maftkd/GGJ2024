@@ -8,11 +8,12 @@ public class CameraController : MonoBehaviour
     private Transform _player;
     public CharacterController charCon;
     public CameraControllerSettingsSO settings;
+    private Camera _cam;
 
     void OnGUI() {
         float x = 160;
         float width = 120;
-        GUI.Box(new Rect(x - 10,10,width + 20,120), "Camera Info");
+        GUI.Box(new Rect(x - 10,10,width + 20,220), "Camera Info");
         float height = 35;
         GUI.Label (new Rect (x, height, width, 30), "right: " + charCon.goingRight);
 
@@ -30,10 +31,16 @@ public class CameraController : MonoBehaviour
         GUI.Label (new Rect (x, height, width, 30), "Speed y: " + settings.speedVert.ToString("0.0"));
         height += 20;
         settings.speedVert = GUI.HorizontalSlider(new Rect(x, height, width, 30), settings.speedVert, 0f, 20f);
+
+        height += 20;
+        GUI.Label (new Rect (x, height, width, 30), "Size: " + settings.size.ToString("0.0"));
+        height += 20;
+        settings.size = GUI.HorizontalSlider(new Rect(x, height, width, 30), settings.size, 1f, 10f);
     }
 
     void Awake() {
         _player = charCon.transform;
+        _cam = GetComponent<Camera>();
     }
 
     // Start is called before the first frame update
@@ -63,5 +70,7 @@ public class CameraController : MonoBehaviour
         pos.x = Mathf.Lerp(transform.position.x, pos.x, Time.deltaTime * settings.speed);
         pos.y = Mathf.Lerp(transform.position.y, pos.y, Time.deltaTime * settings.speedVert);
         transform.position = pos;
+
+        _cam.orthographicSize = settings.size;
     }
 }
