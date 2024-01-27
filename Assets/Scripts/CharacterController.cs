@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+//tmp
+using UnityEditor;
 
 public class CharacterController : MonoBehaviour
 {
@@ -40,6 +42,11 @@ public class CharacterController : MonoBehaviour
     void Start()
     {
 
+    }
+
+    void OnDestroy() {
+        //tmp
+        EditorUtility.SetDirty(settings);
     }
 
     // Update is called once per frame
