@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class GunController : MonoBehaviour
 {
@@ -8,6 +9,9 @@ public class GunController : MonoBehaviour
     public bool hideGui;
     public Transform gunPivot;
     private Camera _cam;
+    public GunSettingsSO settings;
+
+    private float _fireTimer;
 
     void OnGUI() {
         if(hideGui) {
@@ -16,25 +20,23 @@ public class GunController : MonoBehaviour
         float x = 300;
         float width = 120;
         GUI.Box(new Rect(x - 10,10,width + 20,220), "Gun Info");
-        /*
+
         float height = 35;
-        GUI.Label (new Rect (x, height, width, 30), "right: " + charCon.goingRight);
+        GUI.Label (new Rect (x, height, width, 30), "Fire delay: " + settings.fireDelay.ToString("0.00"));
+        height += 20;
+        settings.fireDelay = GUI.HorizontalSlider(new Rect(x, height, width, 30), settings.fireDelay, 0f, 1f);
 
         height += 20;
-        GUI.Label (new Rect (x, height, width, 30), "Look ahead: " + settings.lookAhead.ToString("0.0"));
+        GUI.Label (new Rect (x, height, width, 30), "Bullet speed: " + settings.bulletSpeed.ToString("0.0"));
         height += 20;
-        settings.lookAhead = GUI.HorizontalSlider(new Rect(x, height, width, 30), settings.lookAhead, 0f, 5f);
+        settings.bulletSpeed = GUI.HorizontalSlider(new Rect(x, height, width, 30), settings.bulletSpeed, 0f, 50f);
 
         height += 20;
-        GUI.Label (new Rect (x, height, width, 30), "Speed x: " + settings.speed.ToString("0.0"));
+        GUI.Label (new Rect (x, height, width, 30), "bullet radius: " + settings.bulletRadius.ToString("0.0"));
         height += 20;
-        settings.speed = GUI.HorizontalSlider(new Rect(x, height, width, 30), settings.speed, 0f, 20f);
+        settings.bulletRadius = GUI.HorizontalSlider(new Rect(x, height, width, 30), settings.bulletRadius, 0f, 2f);
 
-        height += 20;
-        GUI.Label (new Rect (x, height, width, 30), "Speed y: " + settings.speedVert.ToString("0.0"));
-        height += 20;
-        settings.speedVert = GUI.HorizontalSlider(new Rect(x, height, width, 30), settings.speedVert, 0f, 20f);
-
+        /*
         height += 20;
         GUI.Label (new Rect (x, height, width, 30), "Size: " + settings.size.ToString("0.0"));
         height += 20;
@@ -46,7 +48,10 @@ public class GunController : MonoBehaviour
     void Awake()
     {
         _cam = Camera.main;
-        
+    }
+
+    void OnDestroy() {
+        EditorUtility.SetDirty(settings);
     }
 
     // Update is called once per frame
@@ -57,5 +62,23 @@ public class GunController : MonoBehaviour
             - new Vector2(gunPivot.position.x, gunPivot.position.y);
         delta.Normalize();
         gunPivot.right = new Vector3(delta.x, delta.y, 0);
+
+        if(Input.GetMouseButtonUp(0)) {
+            _fireTimer = 0;
+        }
+        if(_fireTimer >= settings.fireDelay) {
+            _fireTimer = 0;
+        }
+        else if(_fireTimer > 0) {
+            _fireTimer += Time.deltaTime;
+        }
+        if(_fireTimer == 0 && Input.GetMouseButton(0)) {
+            _fireTimer += Time.deltaTime;
+            Transform bullet = Instantiate(bulletPrefab, gunPivot.position
+                    + gunPivot.right, Quaternion.identity);
+            Bullet b = bullet.GetComponent<Bullet>();
+            b.Init(gunPivot.right * settings.bulletSpeed, settings.bulletRadius);
+        }
+
     }
 }
