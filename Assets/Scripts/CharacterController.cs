@@ -66,12 +66,12 @@ public class CharacterController : MonoBehaviour
     void Update()
     {
         //horizontal motion
+        Vector3 startPos = transform.position;
         float horInput = Input.GetAxis("Horizontal");
-        /*
         _velocity.x = Mathf.Lerp(_velocity.x, horInput * settings.maxHorVel, 
                 Time.deltaTime * settings.horLerp);
         transform.position += Vector3.right * _velocity.x * Time.deltaTime;
-        */
+        /*
         Vector2 vel = _rigidbody.velocity;
         vel.x = horInput * settings.maxHorVel;
 
@@ -79,16 +79,18 @@ public class CharacterController : MonoBehaviour
         Vector2 newPos = new Vector2(transform.position.x, transform.position.y)
             + vel * Time.deltaTime * 1.5f + 
             Vector2.up * transform.localScale.y * _collider.size.y * 0.5f;
+            */
 
-        Collider2D hit = Physics2D.OverlapCapsule(newPos, 
+        Collider2D hit = Physics2D.OverlapCapsule(
+                new Vector2(transform.position.x, transform.position.y +
+                    transform.localScale.y * _collider.size.y * 0.5f),
                 new Vector2(_collider.size.x * transform.localScale.x,
                     _collider.size.y * transform.localScale.y * 0.9f), 
                 CapsuleDirection2D.Vertical, 0);//, _collisionLayerMask);
 
         if(hit != null) {
-            vel.x = 0;
+            transform.position = startPos;
         }
-        _rigidbody.velocity = vel;
 
         //vis dir
         if(horInput != 0) {
