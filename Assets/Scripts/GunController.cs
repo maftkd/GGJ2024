@@ -6,6 +6,8 @@ public class GunController : MonoBehaviour
 {
     public Transform bulletPrefab;
     public bool hideGui;
+    public Transform gunPivot;
+    private Camera _cam;
 
     void OnGUI() {
         if(hideGui) {
@@ -41,14 +43,19 @@ public class GunController : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+        _cam = Camera.main;
         
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        Vector3 mousePos = _cam.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 delta = new Vector2(mousePos.x, mousePos.y)
+            - new Vector2(gunPivot.position.x, gunPivot.position.y);
+        delta.Normalize();
+        gunPivot.right = new Vector3(delta.x, delta.y, 0);
     }
 }

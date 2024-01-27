@@ -15,8 +15,6 @@ public class CharacterController : MonoBehaviour
     //these arrows are for debugging avatar direction
     [HideInInspector]
     public bool goingRight;
-    public GameObject leftArrow;
-    public GameObject rightArrow;
 
     public bool hideGui;
 
@@ -52,7 +50,6 @@ public class CharacterController : MonoBehaviour
         //this may be a bit naive, but let's assume the player always spawns on solid ground
         _grounded = true;
 
-        leftArrow.SetActive(false);
         goingRight = true;
     }
 
@@ -91,8 +88,6 @@ public class CharacterController : MonoBehaviour
         //vis dir
         if(horInput != 0) {
             goingRight = horInput > 0;
-            rightArrow.SetActive(goingRight);
-            leftArrow.SetActive(!goingRight);
         }
 
         //start jump
