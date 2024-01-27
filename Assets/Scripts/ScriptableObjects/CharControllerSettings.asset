@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6af8925ce54bd44789aa2da3b3b0043c, type: 3}
   m_Name: CharControllerSettings
   m_EditorClassIdentifier: 
-  maxHorVel: 5
+  maxHorVel: 9.255319
   horLerp: 1000
   jumpForce: 660.43774
   gravity: 1481.4814
