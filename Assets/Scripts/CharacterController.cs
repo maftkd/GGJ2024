@@ -4,19 +4,17 @@ using UnityEngine;
 
 public class CharacterController : MonoBehaviour
 {
-    public float maxHorVel;
-    public float horLerp;
+    public CharacterControllerSettingsSO settings;
     private Vector2 _velocity;
     private bool _grounded;
     private Rigidbody2D _rigidbody;
-    public float jumpForce;
 
     void OnGUI() {
         GUI.Box(new Rect(10,10,120,90), "Character Info");
         GUI.Label (new Rect (15, 35, 100, 30), "Grounded: " + _grounded);
 
-        GUI.Label (new Rect (15, 55, 100, 30), "Jump Force: " + jumpForce.ToString("0"));
-        jumpForce = GUI.HorizontalSlider(new Rect(15, 75, 100, 30), jumpForce, 0f, 1000f);
+        GUI.Label (new Rect (15, 55, 100, 30), "Jump Force: " + settings.jumpForce.ToString("0"));
+        settings.jumpForce = GUI.HorizontalSlider(new Rect(15, 75, 100, 30), settings.jumpForce, 0f, 1000f);
     }
 
     void Awake()
@@ -37,13 +35,14 @@ public class CharacterController : MonoBehaviour
     {
         //horizontal motion
         float horInput = Input.GetAxis("Horizontal");
-        _velocity.x = Mathf.Lerp(_velocity.x, horInput * maxHorVel, Time.deltaTime * horLerp);
+        _velocity.x = Mathf.Lerp(_velocity.x, horInput * settings.maxHorVel, 
+                Time.deltaTime * settings.horLerp);
         transform.position += Vector3.right * _velocity.x * Time.deltaTime;
 
         //jump
         if(_grounded && Input.GetButtonDown("Jump")) {
             _grounded = false;
-            _rigidbody.AddForce(Vector2.up * jumpForce);
+            _rigidbody.AddForce(Vector2.up * settings.jumpForce);
         }
     }
 
@@ -62,5 +61,4 @@ public class CharacterController : MonoBehaviour
             }
         }
     }
-
 }

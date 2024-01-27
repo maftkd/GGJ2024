@@ -47,9 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6345cf4cb5ded4ec8a66eac23862b9cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHorVel: 5
-  horLerp: 1000
-  jumpForce: 200
+  settings: {fileID: 11400000, guid: 9bb7f427376c4443185711a277c122f6, type: 2}
 --- !u!70 &4955821028524314473
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
