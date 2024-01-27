@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5983673530586576945}
   - component: {fileID: 4955821028524314473}
   - component: {fileID: 7362220435729818686}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: CharacterRig
   m_TagString: Untagged
   m_Icon: {fileID: 0}

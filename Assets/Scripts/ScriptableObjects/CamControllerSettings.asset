@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: CamControllerSettings
   m_EditorClassIdentifier: 
   lookAhead: 2
-  speed: 2.6818182
-  speedVert: 12.407408
-  size: 3.75
+  speed: 5.274411
+  speedVert: 10
+  size: 3.8333333
