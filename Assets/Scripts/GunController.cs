@@ -32,16 +32,14 @@ public class GunController : MonoBehaviour
         settings.bulletSpeed = GUI.HorizontalSlider(new Rect(x, height, width, 30), settings.bulletSpeed, 0f, 50f);
 
         height += 20;
-        GUI.Label (new Rect (x, height, width, 30), "bullet radius: " + settings.bulletRadius.ToString("0.0"));
+        GUI.Label (new Rect (x, height, width, 30), "Bullet radius: " + settings.bulletRadius.ToString("0.0"));
         height += 20;
         settings.bulletRadius = GUI.HorizontalSlider(new Rect(x, height, width, 30), settings.bulletRadius, 0f, 2f);
 
-        /*
         height += 20;
-        GUI.Label (new Rect (x, height, width, 30), "Size: " + settings.size.ToString("0.0"));
+        GUI.Label (new Rect (x, height, width, 30), "Trail dur: " + settings.trailDur.ToString("0.00"));
         height += 20;
-        settings.size = GUI.HorizontalSlider(new Rect(x, height, width, 30), settings.size, 1f, 10f);
-        */
+        settings.trailDur = GUI.HorizontalSlider(new Rect(x, height, width, 30), settings.trailDur, 0f, 1f);
     }
 
     // Start is called before the first frame update
@@ -77,7 +75,7 @@ public class GunController : MonoBehaviour
             Transform bullet = Instantiate(bulletPrefab, gunPivot.position
                     + gunPivot.right, Quaternion.identity);
             Bullet b = bullet.GetComponent<Bullet>();
-            b.Init(gunPivot.right * settings.bulletSpeed, settings.bulletRadius);
+            b.Init(gunPivot.right * settings.bulletSpeed, settings.bulletRadius, settings.trailDur);
         }
 
     }

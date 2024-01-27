@@ -6,12 +6,15 @@ public class Bullet : MonoBehaviour
 {
     private Vector3 _velocity;
     private float _life;
+    public TrailRenderer trail;
 
-    public void Init(Vector3 vel, float radius, float dmg = 0) {
+    public void Init(Vector3 vel, float radius, float trailDur, float dmg = 0) {
         _velocity = vel;
         //outjog so trail is visible
         transform.position += Vector3.back;
         transform.localScale = Vector3.one * radius * 2;
+        trail.time = trailDur;
+        trail.startWidth = radius * 2;
     }
 
     // Start is called before the first frame update
