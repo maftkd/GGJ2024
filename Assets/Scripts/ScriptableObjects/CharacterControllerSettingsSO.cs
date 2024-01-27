@@ -9,6 +9,5 @@ public class CharacterControllerSettingsSO : ScriptableObject
     public float maxHorVel;
     public float horLerp;
     public float jumpForce;
-    public float jumpOverTime;
-    public float jumpWindow;
+    public float gravity;
 }

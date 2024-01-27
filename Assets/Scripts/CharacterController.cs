@@ -17,9 +17,6 @@ public class CharacterController : MonoBehaviour
     public GameObject leftArrow;
     public GameObject rightArrow;
 
-    //jump stuff
-    private float _jumpTimer = -1;
-
     void OnGUI() {
         float width = 120;
         GUI.Box(new Rect(10,10,width + 20,240), "Character Info");
@@ -37,14 +34,9 @@ public class CharacterController : MonoBehaviour
         settings.jumpForce = GUI.HorizontalSlider(new Rect(15, height, width, 30), settings.jumpForce, 0f, 1000f);
 
         height += 20;
-        GUI.Label (new Rect (15, height, width, 30), "JF Over Time: " + settings.jumpOverTime.ToString("0"));
+        GUI.Label (new Rect (15, height, width, 30), "Gravity: " + settings.gravity.ToString("0"));
         height += 20;
-        settings.jumpOverTime = GUI.HorizontalSlider(new Rect(15, height, width, 30), settings.jumpOverTime, 0f, 1000f);
-
-        height += 20;
-        GUI.Label (new Rect (15, height, width, 30), "Jump window: " + settings.jumpWindow.ToString("0.00"));
-        height += 20;
-        settings.jumpWindow = GUI.HorizontalSlider(new Rect(15, height, width, 30), settings.jumpWindow, 0f, 2f);
+        settings.gravity = GUI.HorizontalSlider(new Rect(15, height, width, 30), settings.gravity, 0f, 2000f);
     }
 
     void Awake()
@@ -87,16 +79,10 @@ public class CharacterController : MonoBehaviour
         if(_grounded && Input.GetButtonDown("Jump")) {
             _grounded = false;
             _rigidbody.AddForce(Vector2.up * settings.jumpForce);
-            _jumpTimer = 0;
         }
-        else if(!_grounded && _jumpTimer >= 0 && _jumpTimer < settings.jumpWindow) {
-            if(Input.GetButton("Jump")) {
-                _jumpTimer += Time.deltaTime;
-                _rigidbody.AddForce(Vector2.up * settings.jumpOverTime * Time.deltaTime);
-            }
-            else{
-                _jumpTimer = -1;
-            }
+        else if(!_grounded) {
+            //downward force to spice up the jump
+            _rigidbody.AddForce(Vector2.down * settings.gravity * Time.deltaTime);
         }
     }
 
@@ -111,7 +97,6 @@ public class CharacterController : MonoBehaviour
         foreach(ContactPoint2D contactPoint in other.contacts) {
             if(Vector2.Dot(contactPoint.normal, Vector2.up) > 0) {
                 _grounded = true;
-                _jumpTimer = -1;
                 return;
             }
         }

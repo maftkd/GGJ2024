@@ -14,6 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHorVel: 5
   horLerp: 1000
-  jumpForce: 336.36365
-  jumpOverTime: 232.32323
-  jumpWindow: 1.0858586
+  jumpForce: 660.43774
+  gravity: 1481.4814
