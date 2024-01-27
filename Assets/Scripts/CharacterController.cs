@@ -10,11 +10,14 @@ public class CharacterController : MonoBehaviour
     private Rigidbody2D _rigidbody;
 
     void OnGUI() {
-        GUI.Box(new Rect(10,10,120,90), "Character Info");
+        GUI.Box(new Rect(10,10,120,120), "Character Info");
         GUI.Label (new Rect (15, 35, 100, 30), "Grounded: " + _grounded);
 
-        GUI.Label (new Rect (15, 55, 100, 30), "Jump Force: " + settings.jumpForce.ToString("0"));
-        settings.jumpForce = GUI.HorizontalSlider(new Rect(15, 75, 100, 30), settings.jumpForce, 0f, 1000f);
+        GUI.Label (new Rect (15, 55, 100, 30), "Max speed: " + settings.maxHorVel.ToString("0.0"));
+        settings.maxHorVel = GUI.HorizontalSlider(new Rect(15, 75, 100, 30), settings.maxHorVel, 0f, 20f);
+
+        GUI.Label (new Rect (15, 95, 100, 30), "Jump Force: " + settings.jumpForce.ToString("0"));
+        settings.jumpForce = GUI.HorizontalSlider(new Rect(15, 115, 100, 30), settings.jumpForce, 0f, 1000f);
     }
 
     void Awake()
