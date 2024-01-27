@@ -15,10 +15,8 @@ public class CameraController : MonoBehaviour
         GUI.Label (new Rect (145, 55, 100, 30), "Look ahead: " + settings.lookAhead.ToString("0.0"));
         settings.lookAhead = GUI.HorizontalSlider(new Rect(145, 75, 100, 30), settings.lookAhead, 0f, 5f);
 
-        /*
-        GUI.Label (new Rect (145, 95, 100, 30), "Jump Force: " + settings.jumpForce.ToString("0"));
-        settings.jumpForce = GUI.HorizontalSlider(new Rect(145, 115, 100, 30), settings.jumpForce, 0f, 1000f);
-        */
+        GUI.Label (new Rect (145, 95, 100, 30), "Speed: " + settings.speed.ToString("0.0"));
+        settings.speed = GUI.HorizontalSlider(new Rect(145, 115, 100, 30), settings.speed, 0f, 20f);
     }
 
     void Awake() {
@@ -43,6 +41,6 @@ public class CameraController : MonoBehaviour
         else{
             pos.x -= settings.lookAhead;
         }
-        transform.position = pos;
+        transform.position = Vector3.Lerp(transform.position, pos, Time.deltaTime * settings.speed);
     }
 }
