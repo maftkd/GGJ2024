@@ -71,23 +71,14 @@ public class CharacterController : MonoBehaviour
         _velocity.x = Mathf.Lerp(_velocity.x, horInput * settings.maxHorVel, 
                 Time.deltaTime * settings.horLerp);
         transform.position += Vector3.right * _velocity.x * Time.deltaTime;
-        /*
-        Vector2 vel = _rigidbody.velocity;
-        vel.x = horInput * settings.maxHorVel;
 
-        //test position before applying otherwise we get stuck in wall
-        Vector2 newPos = new Vector2(transform.position.x, transform.position.y)
-            + vel * Time.deltaTime * 1.5f + 
-            Vector2.up * transform.localScale.y * _collider.size.y * 0.5f;
-            */
-
+        //prevent going into walls
         Collider2D hit = Physics2D.OverlapCapsule(
                 new Vector2(transform.position.x, transform.position.y +
                     transform.localScale.y * _collider.size.y * 0.5f),
                 new Vector2(_collider.size.x * transform.localScale.x,
                     _collider.size.y * transform.localScale.y * 0.9f), 
                 CapsuleDirection2D.Vertical, 0);//, _collisionLayerMask);
-
         if(hit != null) {
             transform.position = startPos;
         }
@@ -99,12 +90,29 @@ public class CharacterController : MonoBehaviour
             leftArrow.SetActive(!goingRight);
         }
 
-        //jump
+        //start jump
         if(_grounded && Input.GetButtonDown("Jump")) {
             _grounded = false;
             _rigidbody.AddForce(Vector2.up * settings.jumpForce);
             StartCoroutine(CheckForGround());
         }
+        //fall - having not pressed the jump button
+        else if(_grounded) {
+            Vector2 newPos = new Vector2(transform.position.x,
+                    transform.position.y 
+                    + transform.localScale.y * _collider.size.y * 0.5f);
+            newPos += Vector2.down * 0.1f;
+            //prevent going into walls
+            hit = Physics2D.OverlapCapsule(newPos,
+                    new Vector2(_collider.size.x * transform.localScale.x,
+                        _collider.size.y * transform.localScale.y * 0.9f), 
+                    CapsuleDirection2D.Vertical, 0);
+            if(hit == null) {
+                _grounded = false;
+                StartCoroutine(CheckForGround());
+            }
+        }
+        //in air
         else if(!_grounded) {
             //downward force to spice up the jump
             _rigidbody.AddForce(Vector2.down * settings.gravity * Time.deltaTime);
@@ -119,23 +127,4 @@ public class CharacterController : MonoBehaviour
         }
         _grounded = true;
     }
-
-    /*
-    void OnCollisionEnter2D(Collision2D other){
-        if(_grounded == true) {
-            //we only use this callback to check if the player is grounded for now...
-            return;
-        }
-
-
-        //unity recommends against using this because of Garbage generation
-        //but we can worry about that later
-        foreach(ContactPoint2D contactPoint in other.contacts) {
-            if(Vector2.Dot(contactPoint.normal, Vector2.up) > 0) {
-                _grounded = true;
-                return;
-            }
-        }
-    }
-    */
 }
