@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHorVel: 5
   horLerp: 1000
-  jumpForce: 200
+  jumpForce: 325
