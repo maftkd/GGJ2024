@@ -7,4 +7,5 @@ public class CameraControllerSettingsSO : ScriptableObject
 {
     public float lookAhead;
     public float speed;
+    public float speedVert;
 }
