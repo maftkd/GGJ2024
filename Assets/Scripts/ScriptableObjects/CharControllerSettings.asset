@@ -15,3 +15,5 @@ MonoBehaviour:
   maxHorVel: 5
   horLerp: 1000
   jumpForce: 336.36365
+  jumpOverTime: 232.32323
+  jumpWindow: 1.0858586

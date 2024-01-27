@@ -17,15 +17,34 @@ public class CharacterController : MonoBehaviour
     public GameObject leftArrow;
     public GameObject rightArrow;
 
+    //jump stuff
+    private float _jumpTimer = -1;
+
     void OnGUI() {
-        GUI.Box(new Rect(10,10,120,120), "Character Info");
-        GUI.Label (new Rect (15, 35, 100, 30), "Grounded: " + _grounded);
+        float width = 120;
+        GUI.Box(new Rect(10,10,width + 20,240), "Character Info");
+        float height = 35;
+        GUI.Label (new Rect (15, height, width, 30), "Grounded: " + _grounded);
 
-        GUI.Label (new Rect (15, 55, 100, 30), "Max speed: " + settings.maxHorVel.ToString("0.0"));
-        settings.maxHorVel = GUI.HorizontalSlider(new Rect(15, 75, 100, 30), settings.maxHorVel, 0f, 20f);
+        height += 20;
+        GUI.Label (new Rect (15, height, width, 30), "Max speed: " + settings.maxHorVel.ToString("0.0"));
+        height += 20;
+        settings.maxHorVel = GUI.HorizontalSlider(new Rect(15, height, width, 30), settings.maxHorVel, 0f, 20f);
 
-        GUI.Label (new Rect (15, 95, 100, 30), "Jump Force: " + settings.jumpForce.ToString("0"));
-        settings.jumpForce = GUI.HorizontalSlider(new Rect(15, 115, 100, 30), settings.jumpForce, 0f, 1000f);
+        height += 20;
+        GUI.Label (new Rect (15, height, width, 30), "Jump Force: " + settings.jumpForce.ToString("0"));
+        height += 20;
+        settings.jumpForce = GUI.HorizontalSlider(new Rect(15, height, width, 30), settings.jumpForce, 0f, 1000f);
+
+        height += 20;
+        GUI.Label (new Rect (15, height, width, 30), "JF Over Time: " + settings.jumpOverTime.ToString("0"));
+        height += 20;
+        settings.jumpOverTime = GUI.HorizontalSlider(new Rect(15, height, width, 30), settings.jumpOverTime, 0f, 1000f);
+
+        height += 20;
+        GUI.Label (new Rect (15, height, width, 30), "Jump window: " + settings.jumpWindow.ToString("0.00"));
+        height += 20;
+        settings.jumpWindow = GUI.HorizontalSlider(new Rect(15, height, width, 30), settings.jumpWindow, 0f, 2f);
     }
 
     void Awake()
@@ -68,6 +87,16 @@ public class CharacterController : MonoBehaviour
         if(_grounded && Input.GetButtonDown("Jump")) {
             _grounded = false;
             _rigidbody.AddForce(Vector2.up * settings.jumpForce);
+            _jumpTimer = 0;
+        }
+        else if(!_grounded && _jumpTimer >= 0 && _jumpTimer < settings.jumpWindow) {
+            if(Input.GetButton("Jump")) {
+                _jumpTimer += Time.deltaTime;
+                _rigidbody.AddForce(Vector2.up * settings.jumpOverTime * Time.deltaTime);
+            }
+            else{
+                _jumpTimer = -1;
+            }
         }
     }
 
@@ -82,6 +111,7 @@ public class CharacterController : MonoBehaviour
         foreach(ContactPoint2D contactPoint in other.contacts) {
             if(Vector2.Dot(contactPoint.normal, Vector2.up) > 0) {
                 _grounded = true;
+                _jumpTimer = -1;
                 return;
             }
         }

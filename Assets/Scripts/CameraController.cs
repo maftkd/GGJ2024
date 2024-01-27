@@ -10,7 +10,7 @@ public class CameraController : MonoBehaviour
     public CameraControllerSettingsSO settings;
 
     void OnGUI() {
-        GUI.Box(new Rect(140,10,120,120), "Camera Info");
+        GUI.Box(new Rect(150,10,120,120), "Camera Info");
         GUI.Label (new Rect (145, 35, 100, 30), "right: " + charCon.goingRight);
 
         GUI.Label (new Rect (145, 55, 100, 30), "Look ahead: " + settings.lookAhead.ToString("0.0"));
