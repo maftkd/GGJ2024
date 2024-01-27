@@ -18,7 +18,12 @@ public class CharacterController : MonoBehaviour
     public GameObject leftArrow;
     public GameObject rightArrow;
 
+    public bool hideGui;
+
     void OnGUI() {
+        if(hideGui) {
+            return;
+        }
         float width = 120;
         GUI.Box(new Rect(10,10,width + 20,240), "Character Info");
         float height = 35;

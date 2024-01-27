@@ -1,24 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 
-public class CameraController : MonoBehaviour
+public class GunController : MonoBehaviour
 {
-    private Transform _player;
-    public CharacterController charCon;
-    public CameraControllerSettingsSO settings;
-    private Camera _cam;
-
+    public Transform bulletPrefab;
     public bool hideGui;
 
     void OnGUI() {
         if(hideGui) {
             return;
         }
-        float x = 160;
+        float x = 300;
         float width = 120;
-        GUI.Box(new Rect(x - 10,10,width + 20,220), "Camera Info");
+        GUI.Box(new Rect(x - 10,10,width + 20,220), "Gun Info");
+        /*
         float height = 35;
         GUI.Label (new Rect (x, height, width, 30), "right: " + charCon.goingRight);
 
@@ -41,11 +37,7 @@ public class CameraController : MonoBehaviour
         GUI.Label (new Rect (x, height, width, 30), "Size: " + settings.size.ToString("0.0"));
         height += 20;
         settings.size = GUI.HorizontalSlider(new Rect(x, height, width, 30), settings.size, 1f, 10f);
-    }
-
-    void Awake() {
-        _player = charCon.transform;
-        _cam = GetComponent<Camera>();
+        */
     }
 
     // Start is called before the first frame update
@@ -54,28 +46,9 @@ public class CameraController : MonoBehaviour
         
     }
 
-    void OnDestroy() {
-        //tmp
-        EditorUtility.SetDirty(settings);
-    }
-
     // Update is called once per frame
     void Update()
     {
-        //lets try something naive at first
-        Vector3 pos = transform.position;
-        pos.x = _player.position.x;
-        pos.y = _player.position.y;
-        if(charCon.goingRight) {
-            pos.x += settings.lookAhead;
-        }
-        else{
-            pos.x -= settings.lookAhead;
-        }
-        pos.x = Mathf.Lerp(transform.position.x, pos.x, Time.deltaTime * settings.speed);
-        pos.y = Mathf.Lerp(transform.position.y, pos.y, Time.deltaTime * settings.speedVert);
-        transform.position = pos;
-
-        _cam.orthographicSize = settings.size;
+        
     }
 }

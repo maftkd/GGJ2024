@@ -1748,6 +1748,10 @@ PrefabInstance:
       propertyPath: charCon
       value: 
       objectReference: {fileID: 60420212}
+    - target: {fileID: 7039529762291519468, guid: a160f34a856d648d7b43b40c141b41ee, type: 3}
+      propertyPath: hideGui
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
