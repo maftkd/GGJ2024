@@ -9,6 +9,12 @@ public class CharacterController : MonoBehaviour
     private bool _grounded;
     private Rigidbody2D _rigidbody;
 
+    //these arrows are for debugging avatar direction
+    [HideInInspector]
+    public bool goingRight;
+    public GameObject leftArrow;
+    public GameObject rightArrow;
+
     void OnGUI() {
         GUI.Box(new Rect(10,10,120,120), "Character Info");
         GUI.Label (new Rect (15, 35, 100, 30), "Grounded: " + _grounded);
@@ -25,6 +31,9 @@ public class CharacterController : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody2D>();
         //this may be a bit naive, but let's assume the player always spawns on solid ground
         _grounded = true;
+
+        leftArrow.SetActive(false);
+        goingRight = true;
     }
 
     // Start is called before the first frame update
@@ -41,6 +50,12 @@ public class CharacterController : MonoBehaviour
         _velocity.x = Mathf.Lerp(_velocity.x, horInput * settings.maxHorVel, 
                 Time.deltaTime * settings.horLerp);
         transform.position += Vector3.right * _velocity.x * Time.deltaTime;
+        //vis dir
+        if(horInput != 0) {
+            goingRight = horInput > 0;
+            rightArrow.SetActive(goingRight);
+            leftArrow.SetActive(!goingRight);
+        }
 
         //jump
         if(_grounded && Input.GetButtonDown("Jump")) {
