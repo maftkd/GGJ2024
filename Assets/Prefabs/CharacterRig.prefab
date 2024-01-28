@@ -51,7 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   settings: {fileID: 11400000, guid: 9bb7f427376c4443185711a277c122f6, type: 2}
   goingRight: 0
-  hideGui: 0
+  hideGui: 1
 --- !u!70 &4955821028524314473
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 6383726199775230612, guid: 74c9153fbdec8413bae206ac8c746e0d, type: 3}
-  hideGui: 0
+  hideGui: 1
   gunPivot: {fileID: 8026917724934541219}
   settings: {fileID: 11400000, guid: 834997ae7a67649c28049e5f8ce275de, type: 2}
 --- !u!1 &1683328807737130312

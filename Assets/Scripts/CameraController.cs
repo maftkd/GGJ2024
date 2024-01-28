@@ -77,5 +77,9 @@ public class CameraController : MonoBehaviour
         transform.position = pos;
 
         _cam.orthographicSize = settings.size;
+
+        if(Input.GetKeyUp(KeyCode.Tab)) {
+            hideGui = !hideGui;
+        }
     }
 }

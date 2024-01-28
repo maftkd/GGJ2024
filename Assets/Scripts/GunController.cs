@@ -78,5 +78,8 @@ public class GunController : MonoBehaviour
             b.Init(gunPivot.right * settings.bulletSpeed, settings.bulletRadius, settings.trailDur);
         }
 
+        if(Input.GetKeyUp(KeyCode.Tab)) {
+            hideGui = !hideGui;
+        }
     }
 }
