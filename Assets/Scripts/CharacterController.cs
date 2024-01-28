@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//tmp
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 
 public class CharacterController : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class CharacterController : MonoBehaviour
 
     public bool hideGui;
 
+#if UNITY_EDITOR
     void OnGUI() {
         if(hideGui) {
             return;
@@ -42,6 +44,7 @@ public class CharacterController : MonoBehaviour
         height += 20;
         settings.gravity = GUI.HorizontalSlider(new Rect(15, height, width, 30), settings.gravity, 0f, 2000f);
     }
+#endif
 
     void Awake()
     {
@@ -61,7 +64,9 @@ public class CharacterController : MonoBehaviour
 
     void OnDestroy() {
         //tmp
+#if UNITY_EDITOR
         EditorUtility.SetDirty(settings);
+#endif
     }
 
     // Update is called once per frame
