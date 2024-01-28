@@ -92,9 +92,35 @@ public class CharacterController : MonoBehaviour
 
         //start jump
         if(_grounded && Input.GetButtonDown("Jump")) {
-            _grounded = false;
-            _rigidbody.AddForce(Vector2.up * settings.jumpForce);
-            StartCoroutine(CheckForGround());
+            if(Input.GetAxis("Vertical") < 0) {
+                //down jump
+                Debug.Log("Down jump");
+                Vector2 newPos = new Vector2(transform.position.x,
+                        transform.position.y 
+                        + transform.localScale.y * _collider.size.y * 0.5f);
+                newPos += Vector2.down * 0.1f;
+                //prevent going into walls
+                hit = Physics2D.OverlapCapsule(newPos,
+                        new Vector2(_collider.size.x * transform.localScale.x,
+                            _collider.size.y * transform.localScale.y * 0.9f), 
+                        CapsuleDirection2D.Vertical, 0);
+                if(hit != null) {
+                    if(hit.GetComponent<PlatformEffector2D>() != null) {
+                        PlatformEffector2D platformEffector = 
+                            hit.GetComponent<PlatformEffector2D>();
+                        //tmp
+                        hit.enabled = false;
+                        _grounded = false;
+                        StartCoroutine(CheckForGround());
+                        StartCoroutine(ReenableCollider(hit));
+                    }
+                }
+            }
+            else{
+                _grounded = false;
+                _rigidbody.AddForce(Vector2.up * settings.jumpForce);
+                StartCoroutine(CheckForGround());
+            }
         }
         //fall - having not pressed the jump button
         else if(_grounded) {
@@ -130,5 +156,10 @@ public class CharacterController : MonoBehaviour
             yield return null;
         }
         _grounded = true;
+    }
+
+    IEnumerator ReenableCollider(Collider2D col) {
+        yield return new WaitForSeconds(0.5f);
+        col.enabled = true;
     }
 }
