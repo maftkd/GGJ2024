@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireDelay: 0.32883257
   bulletSpeed: 4.7619853
-  bulletRadius: 0.2166912
+  bulletRadius: 0.21272673
   trailDur: 0

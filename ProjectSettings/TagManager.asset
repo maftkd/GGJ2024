@@ -8,11 +8,11 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Map
   - Water
   - UI
-  - 
-  - 
+  - Off Cam UI
+  - Lighting
   - 
   - 
   - 
@@ -46,4 +46,7 @@ TagManager:
     locked: 0
   - name: Forground
     uniqueID: 4185083627
+    locked: 0
+  - name: MapView
+    uniqueID: 1891917501
     locked: 0
