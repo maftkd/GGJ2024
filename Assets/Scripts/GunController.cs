@@ -15,6 +15,8 @@ public class GunController : MonoBehaviour
 
     private float _fireTimer;
 
+    public AudioClip[] shootSounds;
+
 #if UNITY_EDITOR
     void OnGUI() {
         if(hideGui) {
@@ -87,6 +89,9 @@ public class GunController : MonoBehaviour
                     + gunPivot.right, Quaternion.identity);
             Bullet b = bullet.GetComponent<Bullet>();
             b.Init(gunPivot.right * settings.bulletSpeed, settings);
+
+            int index = Random.Range(0, shootSounds.Length);
+            AudioController.Instance.PlayOneShot(shootSounds[index], transform.position);
         }
 
         if(Input.GetKeyUp(KeyCode.Tab)) {
