@@ -117,6 +117,10 @@ public class CharacterController : MonoBehaviour
             //downward force to spice up the jump
             _rigidbody.AddForce(Vector2.down * settings.gravity * Time.deltaTime);
         }
+
+        if(Input.GetKeyUp(KeyCode.Tab)) {
+            hideGui = !hideGui;
+        }
     }
 
     IEnumerator CheckForGround() {

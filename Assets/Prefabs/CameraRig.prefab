@@ -108,7 +108,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   charCon: {fileID: 0}
   settings: {fileID: 11400000, guid: 89580cbbff6df450a8c8e7ca82dc8ccc, type: 2}
-  hideGui: 0
+  hideGui: 1
 --- !u!114 &-6945401028929955378
 MonoBehaviour:
   m_ObjectHideFlags: 0
