@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 
 public class GunController : MonoBehaviour
 {
@@ -13,6 +15,7 @@ public class GunController : MonoBehaviour
 
     private float _fireTimer;
 
+#if UNITY_EDITOR
     void OnGUI() {
         if(hideGui) {
             return;
@@ -41,6 +44,7 @@ public class GunController : MonoBehaviour
         height += 20;
         settings.trailDur = GUI.HorizontalSlider(new Rect(x, height, width, 30), settings.trailDur, 0f, 1f);
     }
+#endif
 
     // Start is called before the first frame update
     void Awake()
@@ -49,7 +53,9 @@ public class GunController : MonoBehaviour
     }
 
     void OnDestroy() {
+#if UNITY_EDITOR
         EditorUtility.SetDirty(settings);
+#endif
     }
 
     // Update is called once per frame

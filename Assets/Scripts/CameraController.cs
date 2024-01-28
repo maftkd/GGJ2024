@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 
 public class CameraController : MonoBehaviour
 {
@@ -12,6 +14,7 @@ public class CameraController : MonoBehaviour
 
     public bool hideGui;
 
+#if UNITY_EDITOR
     void OnGUI() {
         if(hideGui) {
             return;
@@ -42,6 +45,7 @@ public class CameraController : MonoBehaviour
         height += 20;
         settings.size = GUI.HorizontalSlider(new Rect(x, height, width, 30), settings.size, 1f, 10f);
     }
+#endif
 
     void Awake() {
         _player = charCon.transform;
@@ -56,7 +60,9 @@ public class CameraController : MonoBehaviour
 
     void OnDestroy() {
         //tmp
+#if UNITY_EDITOR
         EditorUtility.SetDirty(settings);
+#endif
     }
 
     // Update is called once per frame
