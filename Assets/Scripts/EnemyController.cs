@@ -23,6 +23,8 @@ public class EnemyController : MonoBehaviour
     [Range(0.01f, 2f)]
     public float moveSpeed;
 
+    public AudioClip[] popSounds;
+
     void Awake() {
         _health = maxHealth;
     }
@@ -100,6 +102,10 @@ public class EnemyController : MonoBehaviour
             if(_health <= 0){
                 _health = 0;
                 Destroy(gameObject);
+            }
+            else{
+                int index = Random.Range(0, popSounds.Length);
+                AudioController.Instance.PlayOneShot(popSounds[index], transform.position);
             }
             healthBar.fillAmount = _health / maxHealth;
         }
