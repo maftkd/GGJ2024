@@ -55,6 +55,10 @@ MonoBehaviour:
   hideGui: 1
   maxHealth: 100
   healthBar: {fileID: 3300196211917655253}
+  collisionMask:
+    serializedVersion: 2
+    m_Bits: 9
+  invincibilityDur: 0
 --- !u!70 &4955821028524314473
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
