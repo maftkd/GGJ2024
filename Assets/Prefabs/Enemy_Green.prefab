@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: -2934854219445813604}
   - component: {fileID: 3955724363683943219}
   - component: {fileID: 7728668766522346637}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Enemy_Green
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -185,6 +185,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d8d4e18e7b3eb45728637acd5b181315, type: 3}
   - {fileID: 8300000, guid: a3c3bec8d63984fc98080c15e57d81bd, type: 3}
   - {fileID: 8300000, guid: 11791750f08e44f979265d43e95935f4, type: 3}
+  damage: 10
+  damageDelay: 0.5
 --- !u!60 &3955724363683943219
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -214,7 +216,7 @@ PolygonCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

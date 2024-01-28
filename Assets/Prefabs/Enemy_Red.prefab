@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 590377093683782096}
   - component: {fileID: -1077721009973281631}
   - component: {fileID: -7824143300359020331}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Enemy_Red
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,6 +110,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d8d4e18e7b3eb45728637acd5b181315, type: 3}
   - {fileID: 8300000, guid: a3c3bec8d63984fc98080c15e57d81bd, type: 3}
   - {fileID: 8300000, guid: 11791750f08e44f979265d43e95935f4, type: 3}
+  damage: 10
+  damageDelay: 0.5
 --- !u!60 &-1077721009973281631
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -139,7 +141,7 @@ PolygonCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

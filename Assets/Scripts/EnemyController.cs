@@ -25,6 +25,9 @@ public class EnemyController : MonoBehaviour
 
     public AudioClip[] popSounds;
 
+    public float damage;
+    public float damageDelay;
+
     void Awake() {
         _health = maxHealth;
     }

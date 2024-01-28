@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -18,6 +20,14 @@ public class CharacterController : MonoBehaviour
     public bool goingRight;
 
     public bool hideGui;
+
+    public float maxHealth;
+    private float _health;
+    public Image healthBar;
+    public LayerMask collisionMask;
+
+    public float invincibilityDur;
+    private float _invincibilityTimer;
 
 #if UNITY_EDITOR
     void OnGUI() {
@@ -54,6 +64,8 @@ public class CharacterController : MonoBehaviour
         _grounded = true;
 
         goingRight = true;
+
+        _health = maxHealth;
     }
 
     // Start is called before the first frame update
@@ -85,7 +97,7 @@ public class CharacterController : MonoBehaviour
                     transform.localScale.y * _collider.size.y * 0.5f),
                 new Vector2(_collider.size.x * transform.localScale.x,
                     _collider.size.y * transform.localScale.y * 0.9f), 
-                CapsuleDirection2D.Vertical, 0);//, _collisionLayerMask);
+                CapsuleDirection2D.Vertical, 0, collisionMask);
         if(hit != null) {
             transform.position = startPos;
         }
@@ -166,5 +178,55 @@ public class CharacterController : MonoBehaviour
     IEnumerator ReenableCollider(Collider2D col) {
         yield return new WaitForSeconds(0.5f);
         col.enabled = true;
+    }
+
+    void OnTriggerExit2D(Collider2D other) {
+        if(other.GetComponent<EnemyController>() != null) {
+            Debug.Log("ouch");
+            /*
+            Bullet bullet = other.GetComponent<Bullet>();
+            _health -= bullet.settings.damage;
+            if(_health <= 0){
+                _health = 0;
+                Destroy(gameObject);
+            }
+            else{
+                int index = Random.Range(0, popSounds.Length);
+                AudioController.Instance.PlayOneShot(popSounds[index], transform.position);
+            }
+            healthBar.fillAmount = _health / maxHealth;
+            */
+        }
+    }
+
+    void OnTriggerStay2D(Collider2D other) {
+        if(other.GetComponent<EnemyController>() != null) {
+            EnemyController enemy = other.GetComponent<EnemyController>();
+
+            _invincibilityTimer += Time.deltaTime;
+            if(_invincibilityTimer > enemy.damageDelay) {
+                _invincibilityTimer = 0;
+
+                _health -= enemy.damage;
+                if(_health <= 0){
+                    _health = 0;
+                    SceneManager.LoadScene("TitleScreen");
+                }
+                healthBar.fillAmount = _health / maxHealth;
+            }
+            /*
+            Bullet bullet = other.GetComponent<Bullet>();
+            _health -= bullet.settings.damage;
+            if(_health <= 0){
+                _health = 0;
+                Destroy(gameObject);
+            }
+            else{
+                int index = Random.Range(0, popSounds.Length);
+                AudioController.Instance.PlayOneShot(popSounds[index], transform.position);
+            }
+            healthBar.fillAmount = _health / maxHealth;
+            */
+        }
     }
 }

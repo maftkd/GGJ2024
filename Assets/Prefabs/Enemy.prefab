@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3687485698482407746}
   - component: {fileID: 6734490049852987407}
   - component: {fileID: 9065140826097197053}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,6 +110,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d8d4e18e7b3eb45728637acd5b181315, type: 3}
   - {fileID: 8300000, guid: a3c3bec8d63984fc98080c15e57d81bd, type: 3}
   - {fileID: 8300000, guid: 11791750f08e44f979265d43e95935f4, type: 3}
+  damage: 10
+  damageDelay: 0.5
 --- !u!58 &6734490049852987407
 CircleCollider2D:
   m_ObjectHideFlags: 0
