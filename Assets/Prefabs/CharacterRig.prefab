@@ -130,6 +130,10 @@ MonoBehaviour:
   hideGui: 1
   gunPivot: {fileID: 8026917724934541219}
   settings: {fileID: 11400000, guid: 834997ae7a67649c28049e5f8ce275de, type: 2}
+  shootSounds:
+  - {fileID: 8300000, guid: 31085565e83c24d169abd74ba94d5b6b, type: 3}
+  - {fileID: 8300000, guid: d0564d38675354616971bc53bc524d34, type: 3}
+  - {fileID: 8300000, guid: 32282996d160b4a3982a930ed27afce1, type: 3}
 --- !u!1 &1683328807737130312
 GameObject:
   m_ObjectHideFlags: 0
