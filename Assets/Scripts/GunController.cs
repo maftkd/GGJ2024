@@ -43,6 +43,11 @@ public class GunController : MonoBehaviour
         GUI.Label (new Rect (x, height, width, 30), "Trail dur: " + settings.trailDur.ToString("0.00"));
         height += 20;
         settings.trailDur = GUI.HorizontalSlider(new Rect(x, height, width, 30), settings.trailDur, 0f, 1f);
+
+        height += 20;
+        GUI.Label (new Rect (x, height, width, 30), "Damage: " + settings.damage.ToString("0.0"));
+        height += 20;
+        settings.damage = GUI.HorizontalSlider(new Rect(x, height, width, 30), settings.damage, 1f, 100f);
     }
 #endif
 
@@ -81,7 +86,7 @@ public class GunController : MonoBehaviour
             Transform bullet = Instantiate(bulletPrefab, gunPivot.position
                     + gunPivot.right, Quaternion.identity);
             Bullet b = bullet.GetComponent<Bullet>();
-            b.Init(gunPivot.right * settings.bulletSpeed, settings.bulletRadius, settings.trailDur);
+            b.Init(gunPivot.right * settings.bulletSpeed, settings);
         }
 
         if(Input.GetKeyUp(KeyCode.Tab)) {

@@ -9,4 +9,5 @@ public class GunSettingsSO : ScriptableObject
     public float bulletSpeed;
     public float bulletRadius;
     public float trailDur;
+    public float damage;
 }

@@ -26,6 +26,14 @@ public class EnemyController : MonoBehaviour
     }
 
     void OnTriggerEnter2D(Collider2D other) {
-        Debug.Log("ouch");
+        if(other.GetComponent<Bullet>() != null) {
+            Bullet bullet = other.GetComponent<Bullet>();
+            _health -= bullet.settings.damage;
+            if(_health <= 0){
+                _health = 0;
+                Destroy(gameObject);
+            }
+            healthBar.fillAmount = _health / maxHealth;
+        }
     }
 }

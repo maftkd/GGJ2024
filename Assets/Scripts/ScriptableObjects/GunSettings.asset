@@ -16,3 +16,4 @@ MonoBehaviour:
   bulletSpeed: 4.7619853
   bulletRadius: 0.21272673
   trailDur: 0
+  damage: 9.25
