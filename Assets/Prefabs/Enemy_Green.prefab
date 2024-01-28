@@ -178,6 +178,13 @@ MonoBehaviour:
   healthBar: {fileID: 8590847040990749780}
   maxHealth: 100
   moveSpeed: 0.39
+  popSounds:
+  - {fileID: 8300000, guid: 79bca2ff49a6e4e4baba384fffc42eb3, type: 3}
+  - {fileID: 8300000, guid: 7cba489cf157340f3b8077ad3321c4c3, type: 3}
+  - {fileID: 8300000, guid: c63ea119c401442c5a4f3bc5396516d1, type: 3}
+  - {fileID: 8300000, guid: d8d4e18e7b3eb45728637acd5b181315, type: 3}
+  - {fileID: 8300000, guid: a3c3bec8d63984fc98080c15e57d81bd, type: 3}
+  - {fileID: 8300000, guid: 11791750f08e44f979265d43e95935f4, type: 3}
 --- !u!60 &3955724363683943219
 PolygonCollider2D:
   m_ObjectHideFlags: 0
