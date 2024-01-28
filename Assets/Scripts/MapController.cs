@@ -7,6 +7,15 @@ public class MapController : MonoBehaviour
 {
     public GameObject Map;
 
+    private GameObject Player;
+    private GameObject Camera;
+
+    private void Start()
+    {
+        Player = GameObject.Find("Player");
+        Camera = Camera.gameObject;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -14,5 +23,11 @@ public class MapController : MonoBehaviour
         {
             Map.SetActive(!Map.activeSelf);
         }
+    }
+
+    public void TeleportToCheckpoint(GameObject location)
+    {
+        Player.transform.position = location.transform.position;
+        Camera.transform.position = location.transform.position;
     }
 }
