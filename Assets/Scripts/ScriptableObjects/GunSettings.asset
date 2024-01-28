@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6257522d6d75b4c9094f1b87fcaaedd5, type: 3}
   m_Name: GunSettings
   m_EditorClassIdentifier: 
-  fireDelay: 0.19074075
-  bulletSpeed: 13.425927
-  bulletRadius: 0.19444445
-  trailDur: 0.064814806
+  fireDelay: 0.32883257
+  bulletSpeed: 4.7619853
+  bulletRadius: 0.2166912
+  trailDur: 0

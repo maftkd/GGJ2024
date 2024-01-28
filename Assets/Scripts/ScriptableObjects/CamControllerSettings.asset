@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fa098ac574d840728da4b66d563a487, type: 3}
   m_Name: CamControllerSettings
   m_EditorClassIdentifier: 
-  lookAhead: 1.7219136
+  lookAhead: 2
   speed: 6.111111
   speedVert: 10
-  size: 3.4843345
+  size: 4.285224
