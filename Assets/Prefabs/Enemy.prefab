@@ -102,6 +102,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar: {fileID: 2805179454742444713}
   maxHealth: 100
+  moveSpeed: 0.39
 --- !u!58 &6734490049852987407
 CircleCollider2D:
   m_ObjectHideFlags: 0
