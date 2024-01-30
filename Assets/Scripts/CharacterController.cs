@@ -12,6 +12,7 @@ public class CharacterController : MonoBehaviour
     public CharacterControllerSettingsSO settings;
     private Vector2 _velocity;
     private bool _grounded;
+    private Coroutine _groundCheckRoutine;
     private Rigidbody2D _rigidbody;
     private CapsuleCollider2D _collider;
 
@@ -111,7 +112,7 @@ public class CharacterController : MonoBehaviour
         if(_grounded && Input.GetButtonDown("Jump")) {
             if(Input.GetAxis("Vertical") < 0) {
                 //down jump
-                Debug.Log("Down jump");
+                Debug.Log("Down jump " + Input.GetAxis("Vertical"));
                 Vector2 newPos = new Vector2(transform.position.x,
                         transform.position.y 
                         + transform.localScale.y * _collider.size.y * 0.5f);
@@ -128,7 +129,10 @@ public class CharacterController : MonoBehaviour
                         //tmp
                         hit.enabled = false;
                         _grounded = false;
-                        StartCoroutine(CheckForGround());
+                        if(_groundCheckRoutine != null) {
+                            StopCoroutine(_groundCheckRoutine);
+                        }
+                        _groundCheckRoutine = StartCoroutine(CheckForGround());
                         StartCoroutine(ReenableCollider(hit));
                     }
                 }
@@ -136,7 +140,10 @@ public class CharacterController : MonoBehaviour
             else{
                 _grounded = false;
                 _rigidbody.AddForce(Vector2.up * settings.jumpForce);
-                StartCoroutine(CheckForGround());
+                if(_groundCheckRoutine != null) {
+                    StopCoroutine(_groundCheckRoutine);
+                }
+                _groundCheckRoutine = StartCoroutine(CheckForGround());
             }
         }
         //fall - having not pressed the jump button
@@ -152,7 +159,10 @@ public class CharacterController : MonoBehaviour
                     CapsuleDirection2D.Vertical, 0);
             if(hit == null) {
                 _grounded = false;
-                StartCoroutine(CheckForGround());
+                if(_groundCheckRoutine != null) {
+                    StopCoroutine(_groundCheckRoutine);
+                }
+                _groundCheckRoutine = StartCoroutine(CheckForGround());
             }
         }
         //in air
@@ -167,6 +177,7 @@ public class CharacterController : MonoBehaviour
     }
 
     IEnumerator CheckForGround() {
+        Debug.Log("Start jump");
         //do we need to wait some frames for velocity to update
         yield return new WaitForSeconds(0.5f);
         while(_rigidbody.velocity.y != 0) {
@@ -178,25 +189,6 @@ public class CharacterController : MonoBehaviour
     IEnumerator ReenableCollider(Collider2D col) {
         yield return new WaitForSeconds(0.5f);
         col.enabled = true;
-    }
-
-    void OnTriggerExit2D(Collider2D other) {
-        if(other.GetComponent<EnemyController>() != null) {
-            Debug.Log("ouch");
-            /*
-            Bullet bullet = other.GetComponent<Bullet>();
-            _health -= bullet.settings.damage;
-            if(_health <= 0){
-                _health = 0;
-                Destroy(gameObject);
-            }
-            else{
-                int index = Random.Range(0, popSounds.Length);
-                AudioController.Instance.PlayOneShot(popSounds[index], transform.position);
-            }
-            healthBar.fillAmount = _health / maxHealth;
-            */
-        }
     }
 
     void OnTriggerStay2D(Collider2D other) {
@@ -214,19 +206,18 @@ public class CharacterController : MonoBehaviour
                 }
                 healthBar.fillAmount = _health / maxHealth;
             }
-            /*
-            Bullet bullet = other.GetComponent<Bullet>();
-            _health -= bullet.settings.damage;
-            if(_health <= 0){
-                _health = 0;
-                Destroy(gameObject);
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D col) {
+        //sometimes the collision is kinda deep and it takes a frame or two
+        //for the velocity to get to 0, which is how the usual check for ground
+        //routine works. So this secondary check is aimed to catch that edge case
+        if(Vector2.Dot(col.relativeVelocity.normalized, Vector2.up) > 0.99f) {
+            if(_groundCheckRoutine != null) {
+                StopCoroutine(_groundCheckRoutine);
+                _grounded = true;
             }
-            else{
-                int index = Random.Range(0, popSounds.Length);
-                AudioController.Instance.PlayOneShot(popSounds[index], transform.position);
-            }
-            healthBar.fillAmount = _health / maxHealth;
-            */
         }
     }
 }
